@@ -1,0 +1,9 @@
+inherited Form3_Surface: TForm3_Surface
+  ClientHeight = 1920
+  ClientWidth = 1080
+  DesignerMasterStyle = 0
+  inherited Memo1: TMemo
+    Viewport.Width = 1001.000000000000000000
+    Viewport.Height = 209.000000000000000000
+  end
+end

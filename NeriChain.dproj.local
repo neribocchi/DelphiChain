@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2024/02/19 19:23:40.465,=\\Mac\Home\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>2024/02/19 19:24:20.735,\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Wallet.fmx=\\Mac\Home\Documents\Embarcadero\Studio\Projects\Unit3.fmx</Transaction>
+    <Transaction>2024/02/19 19:24:20.735,\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Wallet.pas=\\Mac\Home\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>2024/02/19 19:24:35.467,=\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Block.pas</Transaction>
+    <Transaction>2024/02/19 19:24:35.890,=\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\web3.utils.pas</Transaction>
+    <Transaction>2024/02/19 19:27:53.587,\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\NeriChain.dproj=\\Mac\Home\Documents\Embarcadero\Studio\Projects\Project3.dproj</Transaction>
+    <Transaction>2024/02/20 16:12:11.483,=\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Unit1.pas</Transaction>
+    <Transaction>2024/02/20 16:12:20.063,\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Accounts.pas=\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Unit1.pas</Transaction>
+    <Transaction>2024/02/20 16:27:13.056,=\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Unit1.pas</Transaction>
+    <Transaction>2024/02/20 16:28:10.248,\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\SealedVault.pas=\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Unit1.pas</Transaction>
+    <Transaction>2024/02/20 16:35:46.409,=\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Unit1.pas</Transaction>
+    <Transaction>2024/02/20 16:36:08.050,\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Chain.pas=\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\Unit1.pas</Transaction>
+    <Transaction>2024/02/20 17:28:46.845,\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\ChainVault.pas=\\Mac\Home\Documents\Embarcadero\Studio\Projects\NeriChain\SealedVault.pas</Transaction>
+  </Transactions>
+</BorlandProject>

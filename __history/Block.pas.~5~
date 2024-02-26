@@ -1,0 +1,46 @@
+unit Block;
+
+
+interface
+
+uses system.Types,System.SysUtils,web3.utils;
+
+Type
+
+TBlock = Class(TObject)
+  private
+    index:integer;
+    prevBlock:TBlock;
+    hash:TBytes;
+    prevhash:TBytes;
+    nonce:Integer;
+    data:TBytes;
+  public
+  constructor create(Block:TBlock);
+  function getBlockHash:TBytes;
+End;
+
+implementation
+
+{ TBlock }
+
+constructor TBlock.create(Block: TBlock);
+begin
+  prevBlock:=Block;
+end;
+
+function TBlock.getBlockHash: TBytes;
+var hashing:TBytes;
+begin
+
+  hashing:=TEncoding.Unicode.GetBytes(index.ToString)+
+           TEncoding.Unicode.GetBytes(nonce.ToString)+
+           hash+
+           prevHash+
+           data;
+  result:=sha3(hashing);
+
+end;
+
+
+end.

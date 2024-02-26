@@ -1,0 +1,181 @@
+unit JsonRPCutils;
+
+interface
+
+uses JSON,System.SysUtils;
+
+type
+ TJSONRPCRequest = class
+  public
+   class var JSON:TJsonObject;
+   class function parse(aJSON:string):boolean;
+   class function create(id,method,params:string):boolean;
+   class function id:string;
+   class function method:string;
+   class function params:string;
+ end;
+
+ TJSONRPCResponse = class
+  public
+   class var JSON:TJsonObject;
+   class function parse(aJSON:string):boolean;
+   class function create(id,res:string):boolean;
+   class function id:string;
+   class function result:string;
+ end;
+
+ TJSONRPCError= class
+  public
+   class var JSON:TJsonObject;
+   class function parse(aJSON:string):boolean;
+   class function create(id,error:string):boolean;
+   class function id:string;
+   class function error:string;
+ end;
+
+
+implementation
+
+{ TJSONRPC }
+
+class function TJSONRPCRequest.create(id, method, params: string): boolean;
+begin
+  parse('{"jsonrpc": "2.0", "method": "'+method+'", "params": '+params+', "id": '+id+'}');
+end;
+
+class function TJSONRPCRequest.id: string;
+begin
+  result:=JSON.GetValue('id').Value;
+end;
+
+
+class function TJSONRPCRequest.method: string;
+begin
+  result:=JSON.GetValue('method').Value;
+end;
+
+class function TJSONRPCRequest.params: string;
+var js:TJsonValue;
+begin
+  js:=JSON.Get('params').JsonValue;
+  if (js is TJsonArray)  then
+  begin
+    var arr:TJsonArray;
+    JSON.TryGetValue('params',arr);
+    result:=arr.ToJSON;
+  end else
+  if (js is TJsonObject)  then
+  begin
+    result:=js.ToJSON;
+  end
+    else
+    result:=js.Value;
+end;
+
+class function TJSONRPCRequest.parse(aJSON: string): boolean;
+
+begin
+  result:=true;
+  try
+    JSON := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(aJson), 0) as TJSONObject;
+    var s:string;
+    JSON.TryGetValue('jsonrpc',s);
+    if s<>'2.0' then result:=false;
+    var arr:TJSONArray;
+    var jo:TJSONObject;
+    if not JSON.TryGetValue('params',s) then
+      if not  JSON.TryGetValue('params',arr) then
+        if not  JSON.TryGetValue('params',jo) then
+          result:=false;
+  except
+    result:=false;
+  end;
+
+end;
+
+{ TJSONRPCResponse }
+
+class function TJSONRPCResponse.parse(aJSON: string): boolean;
+begin
+  result:=true;
+  try
+    JSON := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(aJson), 0) as TJSONObject;
+    var s:string;
+    JSON.TryGetValue('jsonrpc',s);
+    if s<>'2.0' then result:=false;
+    var arr:TJSONArray;
+    var jo:TJSONObject;
+    if not JSON.TryGetValue('result',s) then
+      if not  JSON.TryGetValue('result',arr) then
+        if not  JSON.TryGetValue('result',jo) then
+          result:=false;
+  except
+    result:=false;
+  end;
+end;
+
+class function TJSONRPCResponse.create(id, res:string): boolean;
+begin
+  result:=parse('{"jsonrpc": "2.0", "result": '+res+', "id": '+id+'}');
+end;
+
+class function TJSONRPCResponse.id: string;
+begin
+  result:=JSON.GetValue('id').Value;
+end;
+
+class function TJSONRPCResponse.result: string;
+var js:TJsonValue;
+begin
+  js:=JSON.Get('result').JsonValue;
+  if (js is TJsonArray)  then
+  begin
+    var arr:TJsonArray;
+    JSON.TryGetValue('result',arr);
+    result:=arr.ToJSON;
+  end else
+  if (js is TJsonObject)  then
+  begin
+    result:=js.ToJSON;
+  end
+    else
+    result:=js.Value;
+end;
+
+{ TJSONRPCError }
+
+
+
+class function TJSONRPCError.parse(aJSON: string): boolean;
+begin
+  result:=true;
+  try
+    JSON := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(aJson), 0) as TJSONObject;
+    var s:string;
+    JSON.TryGetValue('jsonrpc',s);
+    if s<>'2.0' then result:=false;
+    JSON.TryGetValue('error',s);
+
+  except
+    result:=false;
+  end;
+end;
+
+class function TJSONRPCError.create(id,  error: string): boolean;
+begin
+   result:=self.parse('{"jsonrpc": "2.0", "error": '+error+',"id": '+id+'}');
+end;
+
+class function TJSONRPCError.error: string;
+begin
+  JSON.TryGetValue('error',result);
+end;
+
+class function TJSONRPCError.id: string;
+begin
+  JSON.TryGetValue('id',result);
+end;
+
+
+
+end.

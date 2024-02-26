@@ -1,0 +1,95 @@
+unit Node;
+
+interface
+uses horse,
+FMX.Types,
+sysutils,
+block,
+chain,
+superObject,supertypes,
+JSONRPCUtils;
+
+type
+
+TNode = Class (TObject)
+
+blockchain:TChain;
+constructor create;
+
+End;
+
+implementation
+
+{ TNode }
+
+constructor TNode.create;
+begin
+
+  if THorse.IsRunning then
+  begin
+    log.d('already running');
+    exit;
+  end;
+
+  var chainID:integer;
+  var genesis:string;
+
+  THorse.Post('/initChain',
+    procedure(Req: THorseRequest; Res: THorseResponse)
+    begin
+
+      if not TJSONRPCRequest.parse(Req.Body) then
+      begin
+        TJSONRPCError.create('1','"invalid json"');
+        Res.Send(TJSONRPCError.JSON.AsString);
+        exit;
+      end;
+
+      var params:iSuperObject;
+      params:=SO(TJSONRPCRequest.params.AsString);
+
+      if not params.AsObject.Exists('chainID')  then
+      begin
+        //chainID not specified
+        TJSONRPCError.create('1','"chainID not specified"');
+        Res.Send(TJSONRPCError.JSON.AsString);
+        exit;
+      end;
+      if not params.AsObject.Exists('genesis')  then
+      begin
+        TJSONRPCError.create('1','"genesis not specified"');
+        Res.Send(TJSONRPCError.JSON.AsString);
+        exit;
+      end;
+
+      chainID:=strtoint(params['chainID'].AsString);
+      genesis:=params['genesis'].AsString;
+
+
+
+     if TJSONRPCRequest.params.DataType=TSuperType.stObject then
+     begin
+       if assigned(blockchain) then
+       begin
+         TJSONRPCError.create('1','"a blockchain already initializaed on this node with the chainID:'+blockchain.chainID.ToString+'"');
+         Res.Send(TJSONRPCError.JSON.AsString);
+         exit;
+       end;
+
+       blockchain:=TChain.create(genesis,100,chainID);
+       Res.Send('blockchain id:'+chainID.ToString+' created with genesis:'+genesis);
+       end;
+
+    end);
+
+  THorse.Post('/addBlock',
+    procedure(Req: THorseRequest; Res: THorseResponse)
+    begin
+      log.d(req.ContentFields.Items['data']);
+      Res.Send('pong');
+    end);
+
+  THorse.Listen(9000);
+end;
+
+end.

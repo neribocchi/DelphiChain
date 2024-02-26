@@ -1,0 +1,15 @@
+unit Block;
+
+interface
+
+type
+TBlock = class(TObject)
+ Hash:;
+
+
+end;
+
+
+implementation
+
+end.

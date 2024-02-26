@@ -1,0 +1,13 @@
+unit JsonRPCutil;
+
+interface
+type
+ TJSONRPC = class
+
+
+   class function
+ end;
+
+implementation
+
+end.

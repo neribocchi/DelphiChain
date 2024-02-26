@@ -1,0 +1,97 @@
+unit JsonRPCutils;
+
+interface
+
+uses JSON,System.SysUtils;
+
+type
+ TJSONRPCRequest = class
+  public
+   class var JSON:TJsonObject;
+   class function parse(aJSON:string):boolean;
+   class function id:string;
+   class function method:string;
+   class function params:TJSONArray;
+ end;
+
+ TJSONRPCResponse = class
+  public
+   class var JSON:TJsonObject;
+   class function parse(aJSON:string):boolean;
+   class function id:string;
+   class function result:TJSONArray;
+ end;
+
+ TJSONRPCError= class
+  public
+   class var JSON:TJsonObject;
+   class function parse(aJSON:string):boolean;
+   class function id:string;
+   class function result:TJSONArray;
+ end;
+
+
+implementation
+
+{ TJSONRPC }
+
+class function TJSONRPCRequest.id: string;
+begin
+  result:=JSON.GetValue('id').Value;
+  end;
+
+
+class function TJSONRPCRequest.method: string;
+begin
+  result:=JSON.GetValue('method').Value;
+end;
+
+class function TJSONRPCRequest.params: TJSONArray;
+begin
+   result:=JSON.GetValue<TJSONArray>('params');
+
+end;
+
+class function TJSONRPCRequest.parse(aJSON: string): boolean;
+
+begin
+  JSON := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(aJson), 0) as TJSONObject;
+  if (JSON.GetValue('FFF').ToString='') then result:=false
+
+end;
+
+{ TJSONRPCResponse }
+
+class function TJSONRPCResponse.id: string;
+begin
+  result:=JSON.GetValue('id').Value;
+end;
+
+class function TJSONRPCResponse.parse(aJSON: string): boolean;
+begin
+  JSON := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(aJson), 0) as TJSONObject;
+end;
+
+class function TJSONRPCResponse.result: TJSONArray;
+begin
+  result:=JSON.GetValue<TJSONArray>('result');
+end;
+
+{ TJSONRPCError }
+
+class function TJSONRPCError.id: string;
+begin
+//
+end;
+
+class function TJSONRPCError.parse(aJSON: string): boolean;
+begin
+  JSON := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(aJson), 0) as TJSONObject;
+end;
+
+class function TJSONRPCError.result: TJSONArray;
+begin
+ result:=JSON.GetValue<TJSONArray>('result');
+end;
+
+end.
