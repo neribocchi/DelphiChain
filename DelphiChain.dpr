@@ -11,7 +11,9 @@ uses
   Wallet in 'Wallet.pas' {Form3},
   web3.utils in 'web3.utils.pas',
   Node in 'Node.pas',
-  JsonRPCutils in 'JsonRPCutils.pas';
+  JsonRPCutils in 'JsonRPCutils.pas',
+  Transaction in 'Transaction.pas',
+  Utils in 'Utils.pas';
 
 {$R *.res}
 

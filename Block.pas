@@ -29,12 +29,14 @@ uses System.Types,
      System.DateUtils,
      System.SysUtils,
      web3.utils,
+     fmx.Types,
      Velthuis.BigIntegers;
 
 Type
 
 TBlock = Class(TObject)
   private
+    dificulty:integer;
     timestamp:TTime;
     index:biginteger;
     prevBlock:TBlock;
@@ -43,7 +45,7 @@ TBlock = Class(TObject)
     data:string;
     hash:TBytes;
   public
-    constructor create(aPrevBlock:TBlock;aData:string);
+    constructor create(aPrevBlock:TBlock;aData:string;aDificulty:integer);
     function calculateBlockHash:TBytes;
     function getHash:TBytes;
     function getPrevHash:TBytes;
@@ -52,6 +54,7 @@ TBlock = Class(TObject)
     function getData:string;
     function getNonce:biginteger;
     function asJson:String;
+    procedure mineBlock;
 End;
 
 implementation
@@ -60,29 +63,29 @@ implementation
 
 { TBlock }
 
-constructor TBlock.create(aPrevBlock: TBlock; aData:string);
+constructor TBlock.create(aPrevBlock: TBlock; aData:string;aDificulty:integer);
 begin
   if assigned(aPrevBlock) then
   begin
     prevBlock:=aPrevBlock;
     prevHash:=prevBlock.getHash;
     index:=prevBlock.index+1;
-    nonce:=prevBlock.nonce+1;
   end
   else
   begin
     //this is a genesis block
     index:=0;
-    nonce:=0;
   end;
+  nonce:=0;
+  dificulty:=aDificulty;
   data:=aData;
-  hash:=calculateBlockHash;
+  mineblock;
   timestamp:=now;
 end;
 
 function TBlock.asJson: string;
 begin
-  result:='{"index":"'+index.ToString+'","timestamp":"'+datetimetounix(timestamp).tostring+'","hash":"'+toHex(hash)+'","prevHash":"'+toHex(prevHash)+'","data":"'+data+'"}';
+  result:='{"nonce":"'+nonce.ToString+'","index":"'+index.ToString+'","timestamp":"'+datetimetounix(timestamp).tostring+'","hash":"'+toHex(hash)+'","prevHash":"'+toHex(prevHash)+'","data":"'+data+'"}';
 end;
 
 function TBlock.getData: string;
@@ -115,6 +118,20 @@ begin
   result:=prevHash;
 end;
 
+
+procedure TBlock.mineBlock;
+begin
+  var newhash:TBytes;
+
+  while copy(tohex(newhash),3,dificulty)<>StringOfChar('0',dificulty) do
+  begin
+    nonce:=nonce+1;
+    newhash:=calculateBlockHash;
+  end;
+
+  hash:=newhash;
+
+end;
 
 function TBlock.calculateBlockHash: TBytes;
 var hashing:TBytes;

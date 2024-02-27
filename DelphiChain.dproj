@@ -291,6 +291,8 @@
         <DCCReference Include="web3.utils.pas"/>
         <DCCReference Include="Node.pas"/>
         <DCCReference Include="JsonRPCutils.pas"/>
+        <DCCReference Include="Transaction.pas"/>
+        <DCCReference Include="Utils.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

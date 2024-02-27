@@ -78,7 +78,7 @@ begin
           exit;
         end;
 
-        blockchain:=TChain.create(genesis,100,chainID);
+        blockchain:=TChain.create(genesis,100,chainID,3);
         TJSONRPCResponse.create('1','blockchain id:'+chainID.ToString+' created with genesis:'+genesis);
         Res.Send(TJSONRPCResponse.JSON.AsString);
       end else
@@ -91,9 +91,10 @@ begin
           exit;
         end;
         var b:TBlock;
-        b:=TBlock.create(blockchain.lastBlock,TJSONRPCRequest.params['data'].AsString);
+        b:=TBlock.create(blockchain.lastBlock,TJSONRPCRequest.params['data'].AsString,3);
         blockchain.addBlock(b);
-        Res.Send(b.asJson);
+        TJSONRPCResponse.create('1',b.asJson);
+        Res.Send(TJSONRPCResponse.JSON.AsString);
       end
       else
       if TJSONRPCRequest.method='getBlockchain' then

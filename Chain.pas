@@ -26,6 +26,7 @@ unit Chain;
 interface
 uses
   Block,
+  Transaction,
   ChainVault,
   System.SysUtils,
   Velthuis.BigIntegers,
@@ -35,16 +36,19 @@ uses
 type
 
 TChain = Class(TObject)
+  dificulty:integer;
   chainID:integer;
   blocks:TList<TBlock>;
   vaultLimit:Integer;
   chainVaults:TList<TChainVault>;
+  pendigTransactions:TDictionary<String, TTransaction>;
   public
-  constructor create(genesis:string;vl:integer;aChainID:integer);
+  constructor create(genesis:string;vl:integer;aChainID:integer;aDificulty:integer);
   function addBlock(block:TBlock):TBlock;
   function getGenesis:TBlock;
   function lastBlock:TBlock;
   function checkConsistancy:integer;
+  function addTransaction(aTransaction:TTransaction):string;
 End;
 
 
@@ -54,11 +58,18 @@ implementation
 
 function TChain.addBlock(block: TBlock):TBlock;
 begin
+  result:=nil;
   if assigned(blocks) then
   begin
     var i:=Blocks.Add(block);
     result:=blocks[i];
   end;
+end;
+
+function TChain.addTransaction(aTransaction: TTransaction): string;
+begin
+  pendigTransactions.Add(tohex(sha3(TEncoding.Unicode.GetBytes(aTransaction.AsJson))),aTransaction);
+  result:=aTransaction.AsJson;
 end;
 
 function TChain.checkConsistancy: integer;
@@ -77,14 +88,17 @@ begin
   end;
 end;
 
-constructor TChain.create(genesis: string;vl:integer;aChainID:integer);
+constructor TChain.create(genesis: string;vl:integer;aChainID,aDificulty:integer);
 begin
+
   chainID:=aChainID;
+  dificulty:=aDificulty;
   vaultLimit:=vl;
   blocks:=TList<TBlock>.create;
   chainVaults:=TList<TChainVault>.create;
   //add genesis block
-  blocks.Add(TBlock.create(nil,genesis));
+  blocks.Add(TBlock.create(nil,genesis,3));
+  pendigTransactions:=TDictionary<String, TTransaction>.create;
 end;
 
 function TChain.getGenesis: TBlock;

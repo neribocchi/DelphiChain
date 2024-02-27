@@ -7,7 +7,7 @@ object Form3: TForm3
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  DesignerMasterStyle = 0
+  DesignerMasterStyle = 1
   object Button1: TButton
     Position.X = 40.000000000000000000
     Position.Y = 33.000000000000000000
@@ -27,8 +27,8 @@ object Form3: TForm3
     Size.Height = 209.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 3
-    Viewport.Width = 997.000000000000000000
-    Viewport.Height = 205.000000000000000000
+    Viewport.Width = 993.000000000000000000
+    Viewport.Height = 201.000000000000000000
   end
   object Button2: TButton
     Position.X = 400.000000000000000000
@@ -42,6 +42,7 @@ object Form3: TForm3
     Position.Y = 55.000000000000000000
     TabOrder = 0
     Text = 'Button1'
+    OnClick = Button3Click
   end
   object genblocks: TSwitch
     IsChecked = False
@@ -100,5 +101,12 @@ object Form3: TForm3
     TabOrder = 10
     Text = 'Button5'
     OnClick = Button5Click
+  end
+  object Button6: TButton
+    Position.X = 880.000000000000000000
+    Position.Y = 56.000000000000000000
+    TabOrder = 12
+    Text = 'Button6'
+    OnClick = Button6Click
   end
 end

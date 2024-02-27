@@ -1,0 +1,104 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Form3'
+  ClientHeight = 562
+  ClientWidth = 1191
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 1
+  object Button1: TButton
+    Position.X = 40.000000000000000000
+    Position.Y = 33.000000000000000000
+    Size.Width = 121.000000000000000000
+    Size.Height = 44.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Init Chain'
+    OnClick = Button1Click
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Position.X = 40.000000000000000000
+    Position.Y = 168.000000000000000000
+    Size.Width = 1001.000000000000000000
+    Size.Height = 209.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Viewport.Width = 993.000000000000000000
+    Viewport.Height = 201.000000000000000000
+  end
+  object Button2: TButton
+    Position.X = 400.000000000000000000
+    Position.Y = 33.000000000000000000
+    TabOrder = 1
+    Text = 'Button1'
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Position.X = 608.000000000000000000
+    Position.Y = 55.000000000000000000
+    TabOrder = 0
+    Text = 'Button1'
+  end
+  object genblocks: TSwitch
+    IsChecked = False
+    Position.X = 177.000000000000000000
+    Position.Y = 51.000000000000000000
+    Size.Width = 44.000000000000000000
+    Size.Height = 26.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    OnSwitch = genblocksSwitch
+  end
+  object genblocks_label: TLabel
+    Position.X = 201.000000000000000000
+    Position.Y = 32.000000000000000000
+    Size.Width = 169.000000000000000000
+    Size.Height = 23.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Gen Blocks'
+    TabOrder = 7
+  end
+  object Label1: TLabel
+    Position.X = 40.000000000000000000
+    Position.Y = 85.000000000000000000
+    Size.Width = 169.000000000000000000
+    Size.Height = 23.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Geneis'
+    TabOrder = 6
+  end
+  object genesis: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 4
+    Position.X = 40.000000000000000000
+    Position.Y = 116.000000000000000000
+    Size.Width = 505.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 1
+    OnTimer = Timer1Timer
+    Left = 768
+    Top = 48
+  end
+  object Button4: TButton
+    Position.X = 384.000000000000000000
+    Position.Y = 408.000000000000000000
+    TabOrder = 9
+    Text = 'Button4'
+    OnClick = Button4Click
+  end
+  object Button5: TButton
+    Position.X = 752.000000000000000000
+    Position.Y = 456.000000000000000000
+    TabOrder = 10
+    Text = 'Button5'
+    OnClick = Button5Click
+  end
+end
